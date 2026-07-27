@@ -11,20 +11,20 @@ public class BankAppRunner
         seed();
 
         System.out.println("Welcome to our bank");
-        String loggedInUsername = mylogin();
+        User loggedInUser = mylogin();
         //authenticateUser(loggedInUsername);
 
-        if (loggedInUsername.equals("admin"))
+        if (loggedInUser.getAdminStatus())
         {
             //admin flow
-            System.out.println("Welcome, " + loggedInUsername + " to the admin dashboard");
+            System.out.println("Welcome, " + loggedInUser.getUsername() + " to the admin dashboard");
             adminDashboard();
         }
         else
         {
             //customer flow
-            System.out.println("Welcome, " + loggedInUsername + " to the customer dashboard");
-            customerDashboard(loggedInUsername);
+            System.out.println("Welcome, " + loggedInUser.getUsername() + " to the customer dashboard");
+            customerDashboard((Customer) loggedInUser);
         }
 
         
@@ -43,7 +43,7 @@ public class BankAppRunner
         usersByUsername.put("shobhit", new Customer("shobhit", "shobhit123", 2000, 9000));
     }
 
-    private static String mylogin()
+    private static User mylogin()
     {
         //keep retrying login until successful or force exit
         while (true)
@@ -64,7 +64,7 @@ public class BankAppRunner
 
             if (matchedUser != null && enteredPassword.equals(matchedUser.getPassword()))
             {
-                return matchedUser.getUsername();
+                return matchedUser;
             }
 
             System.out.println("An error has occurred, please try again.");
@@ -76,33 +76,67 @@ public class BankAppRunner
 
     }
 
-    private static void customerDashboard(String username)
+    private static void customerDashboard(Customer user)
     {
         while (true)
         { 
             System.out.println("What would you like to do?");
-            System.out.println("1: view account balance");
-            System.out.println("2: withdraw from account");
-            System.out.println("3: deposit to account");
-            System.out.println("4: exit app\n");
+            System.out.println("1: view account balances");
+            System.out.println("2: withdraw from an account");
+            System.out.println("3: deposit to an account");
+            System.out.println("4: transfer between accounts");
+            System.out.println("5: exit app\n");
             //System.out.println(": ");
 
 
             switch (input.nextLine())
             {
                 case "1":
-                    
+                    System.out.println("Checkings: $" + user.getCheckings().getBalance());
+                    System.out.println("Savings: $" + user.getSavings().getBalance() + "\n");
                     break;
                 
                 case "2":
-                    
+                    while (true)
+                    {
+                        System.out.println("Which account would you like to withdraw from?");
+                        System.out.println("1: checkings");
+                        System.out.println("2: savings\n");
+
+                        String choice = input.nextLine();
+
+                        if (choice.equals("1"))
+                        {
+                            System.out.println("How much would you like to withdraw?");
+                            user.getCheckings().withdraw(input.nextInt());
+                        }
+                        else if (choice.equals("2"))
+                        {
+
+                        }
+                        else
+                        {
+                            System.out.println("Please enter a valid number.\n");
+                            break;
+                        }
+                    }
                     break;
 
                 case "3":
+                    System.out.println("Which account would you like to deposit to?");
+                    System.out.println("1: checkings");
+                    System.out.println("2: savings");
                     
                     break;
 
                 case "4":
+                    System.out.println("How would you like to transfer funds?");
+                    System.out.println("1: checkings to savings");
+                    System.out.println("2: savings to checkings");
+                    
+                    break;
+
+                case "5":
                     
                     break;
 
@@ -194,8 +228,8 @@ class Admin extends User
 
 class Customer extends User
 {
-    CheckingsAccount checkings;
-    SavingsAccount savings;
+    private CheckingsAccount checkings;
+    private SavingsAccount savings;
 
     public Customer(String USERNAME, String PASSWORD, int CHECKINGS, int SAVINGS)
     {
@@ -204,6 +238,16 @@ class Customer extends User
         checkings = new CheckingsAccount(CHECKINGS);
         savings = new SavingsAccount(SAVINGS);
         isAdmin = false;
+    }
+
+    public CheckingsAccount getCheckings()
+    {
+        return checkings;
+    }
+
+    public SavingsAccount getSavings()
+    {
+        return savings;
     }
 }
 
