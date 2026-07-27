@@ -12,7 +12,6 @@ public class BankAppRunner
 
         System.out.println("Welcome to our bank");
         User loggedInUser = mylogin();
-        //authenticateUser(loggedInUsername);
 
         if (loggedInUser.getAdminStatus())
         {
@@ -26,12 +25,6 @@ public class BankAppRunner
             System.out.println("Welcome, " + loggedInUser.getUsername() + " to the customer dashboard");
             customerDashboard((Customer) loggedInUser);
         }
-
-        
-
-
-
-
     }
 
     private static void seed()
@@ -79,15 +72,13 @@ public class BankAppRunner
     private static void customerDashboard(Customer user)
     {
         while (true)
-        { 
+        {
             System.out.println("What would you like to do?");
             System.out.println("1: view account balances");
             System.out.println("2: withdraw from an account");
             System.out.println("3: deposit to an account");
             System.out.println("4: transfer between accounts");
             System.out.println("5: exit app\n");
-            //System.out.println(": ");
-
 
             switch (input.nextLine())
             {
@@ -95,50 +86,194 @@ public class BankAppRunner
                     System.out.println("Checkings: $" + user.getCheckings().getBalance());
                     System.out.println("Savings: $" + user.getSavings().getBalance() + "\n");
                     break;
-                
+
                 case "2":
                     while (true)
                     {
                         System.out.println("Which account would you like to withdraw from?");
                         System.out.println("1: checkings");
-                        System.out.println("2: savings\n");
+                        System.out.println("2: savings");
+                        System.out.println("3: exit\n");
 
                         String choice = input.nextLine();
+                        
+                        if (choice.equals("3"))
+                        {
+                            break;
+                        }
+
+                        if (!choice.equals("1") && !choice.equals("2"))
+                        {
+                            System.out.println("Please enter a valid number.\n");
+                            continue;
+                        }
+
+                        System.out.println("How much would you like to withdraw?");
+                        String amtStr = input.nextLine();
+                        int amt;
+                        try
+                        {
+                            amt = Integer.parseInt(amtStr);
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Invalid amount.\n");
+                            continue;
+                        }
+
+                        if (amt <= 0)
+                        {
+                            System.out.println("Please enter a positive amount.\n");
+                            continue;
+                        }
 
                         if (choice.equals("1"))
                         {
-                            System.out.println("How much would you like to withdraw?");
-                            user.getCheckings().withdraw(input.nextInt());
-                        }
-                        else if (choice.equals("2"))
-                        {
-
+                            if (amt > user.getCheckings().getBalance())
+                            {
+                                System.out.println("Insufficient funds.\n");
+                                continue;
+                            }
+                            System.out.println("New checkings balance: $" + user.getCheckings().withdraw(amt) + "\n");
                         }
                         else
                         {
-                            System.out.println("Please enter a valid number.\n");
-                            break;
+                            if (amt > user.getSavings().getBalance())
+                            {
+                                System.out.println("Insufficient funds.\n");
+                                continue;
+                            }
+                            System.out.println("New savings balance: $" + user.getSavings().withdraw(amt) + "\n");
                         }
+
+                        break;
                     }
                     break;
 
                 case "3":
-                    System.out.println("Which account would you like to deposit to?");
-                    System.out.println("1: checkings");
-                    System.out.println("2: savings");
-                    
+                    while (true)
+                    {
+                        System.out.println("Which account would you like to deposit to?");
+                        System.out.println("1: checkings");
+                        System.out.println("2: savings");
+                        System.out.println("3: exit\n");
+
+                        String choice = input.nextLine();
+
+                        if (choice.equals("3"))
+                        {
+                            break;
+                        }
+
+                        if (!choice.equals("1") && !choice.equals("2"))
+                        {
+                            System.out.println("Please enter a valid number.\n");
+                            continue;
+                        }
+
+                        System.out.println("How much would you like to deposit?");
+                        String amtStr = input.nextLine();
+                        int amt;
+                        try
+                        {
+                            amt = Integer.parseInt(amtStr);
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Invalid amount.\n");
+                            continue;
+                        }
+
+                        if (amt <= 0)
+                        {
+                            System.out.println("Please enter a positive amount.\n");
+                            continue;
+                        }
+
+                        if (choice.equals("1"))
+                        {
+                            System.out.println("New checkings balance: $" + user.getCheckings().deposit(amt) + "\n");
+                        }
+                        else
+                        {
+                            System.out.println("New savings balance: $" + user.getSavings().deposit(amt) + "\n");
+                        }
+
+                        break;
+                    }
                     break;
 
                 case "4":
-                    System.out.println("How would you like to transfer funds?");
-                    System.out.println("1: checkings to savings");
-                    System.out.println("2: savings to checkings");
-                    
+                    while (true)
+                    {
+                        System.out.println("How would you like to transfer funds?");
+                        System.out.println("1: checkings to savings");
+                        System.out.println("2: savings to checkings");
+                        System.out.println("3: exit\n");
+
+                        String choice = input.nextLine();
+                        
+                        if (choice.equals("3"))
+                        {
+                            break;
+                        }
+
+                        if (!choice.equals("1") && !choice.equals("2"))
+                        {
+                            System.out.println("Please enter a valid number.\n");
+                            continue;
+                        }
+
+                        System.out.println("How much would you like to transfer?");
+                        String amtStr = input.nextLine();
+                        int amt;
+                        try
+                        {
+                            amt = Integer.parseInt(amtStr);
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Invalid amount.\n");
+                            continue;
+                        }
+
+                        if (amt <= 0)
+                        {
+                            System.out.println("Please enter a positive amount.\n");
+                            continue;
+                        }
+
+                        if (choice.equals("1"))
+                        {
+                            if (amt > user.getCheckings().getBalance())
+                            {
+                                System.out.println("Insufficient funds in checkings.\n");
+                                continue;
+                            }
+                            user.getCheckings().withdraw(amt);
+                            user.getSavings().deposit(amt);
+                        }
+                        else
+                        {
+                            if (amt > user.getSavings().getBalance())
+                            {
+                                System.out.println("Insufficient funds in savings.\n");
+                                continue;
+                            }
+                            user.getSavings().withdraw(amt);
+                            user.getCheckings().deposit(amt);
+                        }
+
+                        System.out.println("Transfer complete.");
+                        System.out.println("Checkings: $" + user.getCheckings().getBalance());
+                        System.out.println("Savings: $" + user.getSavings().getBalance() + "\n");
+                        break;
+                    }
                     break;
 
                 case "5":
-                    
-                    break;
+                    System.out.println("Goodbye, " + user.getUsername() + "!\n");
+                    return;
 
                 default:
                     System.err.println("Please enter a valid number.\n");
