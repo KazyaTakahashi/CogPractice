@@ -2,28 +2,45 @@ import java.util.*;
 
 public class BankAppRunner
 {
-    static Scanner sc = new Scanner(System.in);
+    static Scanner input = new Scanner(System.in);
 
-    static Map<String, String> map = new HashMap<>();
-
-    //seeding "database"
-    static {
-        map.put("admin","admin123");
-        map.put("rohit","rohit123");
-        map.put("mohit","mohit123");
-        map.put("shobhit","shobhit123");
-    }
-
+    private static final Map<String, User> usersByUsername = new HashMap<>();
 
     public static void main(String[] args)
     {
+        seed();
+
         System.out.println("Welcome to our bank");
         String loggedInUsername = mylogin();
         //authenticateUser(loggedInUsername);
 
+        if (loggedInUsername.equals("admin"))
+        {
+            //admin flow
+            System.out.println("Welcome, " + loggedInUsername + " to the admin dashboard");
+            adminDashboard();
+        }
+        else
+        {
+            //customer flow
+            System.out.println("Welcome, " + loggedInUsername + " to the customer dashboard");
+            customerDashboard(loggedInUsername);
+        }
+
         
 
 
+
+
+    }
+
+    private static void seed()
+    {
+        usersByUsername.clear();
+        usersByUsername.put("admin", new Admin("admin", "admin123"));
+        usersByUsername.put("rohit", new Customer("rohit", "rohit123", 1000, 5000));
+        usersByUsername.put("mohit", new Customer("mohit", "mohit123", 1500, 7000));
+        usersByUsername.put("shobhit", new Customer("shobhit", "shobhit123", 2000, 9000));
     }
 
     private static String mylogin()
@@ -32,23 +49,67 @@ public class BankAppRunner
         while (true)
         {
             System.out.println("Please enter username and password separated by space");
-            String usernamePassword = sc.nextLine();
+            String usernamePassword = input.nextLine();
             //validation
             String[] tokens = usernamePassword.split(" ");
+            if (tokens.length < 2)
+            {
+                System.out.println("An error has occurred, please try again.");
+                continue;
+            }
+
             String enteredUsername = tokens[0];
             String enteredPassword = tokens[1];
+            User matchedUser = usersByUsername.get(enteredUsername);
 
-            for (Map.Entry<String, String> me:map.entrySet())
+            if (matchedUser != null && enteredPassword.equals(matchedUser.getPassword()))
             {
-                String username = me.getKey();
-                String password = me.getValue();
-                if (username.equals(enteredUsername) && password.equals(enteredPassword))
-                {
-                    return username;
-                }
+                return matchedUser.getUsername();
             }
 
             System.out.println("An error has occurred, please try again.");
+        }
+    }
+
+    private static void adminDashboard()
+    {
+
+    }
+
+    private static void customerDashboard(String username)
+    {
+        while (true)
+        { 
+            System.out.println("What would you like to do?");
+            System.out.println("1: view account balance");
+            System.out.println("2: withdraw from account");
+            System.out.println("3: deposit to account");
+            System.out.println("4: exit app\n");
+            //System.out.println(": ");
+
+
+            switch (input.nextLine())
+            {
+                case "1":
+                    
+                    break;
+                
+                case "2":
+                    
+                    break;
+
+                case "3":
+                    
+                    break;
+
+                case "4":
+                    
+                    break;
+
+                default:
+                    System.err.println("Please enter a valid number.\n");
+                    break;
+            }
         }
     }
 }
@@ -107,7 +168,7 @@ abstract class User
 
     public String getPassword()
     {
-        return username;
+        return password;
     }
 
     public void setPassword(String PASSWORD)
@@ -133,18 +194,60 @@ class Admin extends User
 
 class Customer extends User
 {
-    public Customer(String USERNAME, String PASSWORD)
+    CheckingsAccount checkings;
+    SavingsAccount savings;
+
+    public Customer(String USERNAME, String PASSWORD, int CHECKINGS, int SAVINGS)
     {
         username = USERNAME;
         password = PASSWORD;
+        checkings = new CheckingsAccount(CHECKINGS);
+        savings = new SavingsAccount(SAVINGS);
         isAdmin = false;
     }
 }
 
 
-//Abstract Class Account
-//CheckingsAccount extends Account
-//SavingsAccount extends Account
+abstract class Account
+{
+    protected int balance;
+    protected double interest;
+
+    public int getBalance()
+    {
+        return balance;
+    }
+
+    public int deposit(int amount)
+    {
+        balance+=amount;
+        return balance;
+    }
+
+    public int withdraw(int amount)
+    {
+        balance-=amount;
+        return balance;
+    }
+}
+
+class CheckingsAccount extends Account
+{
+    public CheckingsAccount(int BALANCE)
+    {
+        balance = BALANCE;
+        interest = 0.01;
+    }
+}
+
+class SavingsAccount extends Account
+{
+    public SavingsAccount(int BALANCE)
+    {
+        balance = BALANCE;
+        interest = 0.02;
+    }
+}
 
 //Interface AccountOperations: printInterestRate(), deposit, withdraw, transfer
 //SavingsAccount always gives higher interest rate
