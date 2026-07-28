@@ -33,7 +33,7 @@ class CustomerModel
             ...customerData
         };
 
-        customer.push(customer);
+        customers.push(customer);
         return customer;
     }
 
