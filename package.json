@@ -4,6 +4,9 @@
   "description": "Repo for Cognixia JUMP training",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
+    "dev": "vite",
+    "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,9 +14,16 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mongodb": "^7.5.0",
     "mongoose": "^9.8.1",
-    "react": "^19.2.8"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.4",
+    "vite": "^8.1.5"
   }
 }
