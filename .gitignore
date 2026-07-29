@@ -1,3 +1,4 @@
-.class
 .env
+atlas-credentials.env
+
 node_modules/

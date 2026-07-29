@@ -1,78 +1,75 @@
-let customers = [
-    {
-        id: 1,
-        name: "Adam Smith",
-        email: "AdamS@email.com"
+const mongoose = require("mongoose");
+const path = require("path");
+const dotenv = require("dotenv");
+
+dotenv.config({ path: path.resolve(__dirname, "../../atlas-credentials.env") });
+
+const mongoUri = process.env.MONGODB_URI || "mongodb+srv://<db_username>:<db_password>@cognixia.3nnb1qc.mongodb.net/?appName=Cognixia";
+
+mongoose.connect(mongoUri, {
+    dbName: "BankApp"
+})
+.then(() => console.log("MongoDB connected"))
+.catch((error) => console.error("MongoDB connection error:", error));
+
+const customerSchema = new mongoose.Schema({
+    id: {
+        type: Number,
+        required: true,
+        unique: true
     },
-    {
-        id: 2,
-        name: "Betty Grof",
-        email: "GrofBetty@email.com"
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
     }
-];
+}, {
+    timestamps: true
+});
 
-let nextId = 3;
-
+const Customer = mongoose.model("Customer", customerSchema);
 
 class CustomerModel
 {
-    static findAll()
+    static async findAll()
     {
-        return customers;
+        return Customer.find().sort({ id: 1 });
     }
 
-    static findById(id)
+    static async findById(id)
     {
-        return customers.find(customer => customer.id === id);
+        return Customer.findOne({ id: Number(id) });
     }
 
-    static create(customerData)
+    static async create(customerData)
     {
-        const customer = {
-            id: nextId++,
+        const latestCustomer = await Customer.findOne().sort({ id: -1 }).select("id");
+        const nextId = latestCustomer && latestCustomer.id ? latestCustomer.id + 1 : 1;
+
+        return Customer.create({
+            id: nextId,
             ...customerData
-        };
-
-        customers.push(customer);
-        return customer;
+        });
     }
 
-    static update(id, customerData)
+    static async update(id, customerData)
     {
-        const index = customers.findIndex(customer => customer.id === id);
-        if (index === -1)
-        {
-            return null;
-        }
-
-        customers[index] = {
-            ...customers[index],
-            ...customerData
-        };
-        return customers[index];
+        return Customer.findOneAndUpdate(
+            { id: Number(id) },
+            { $set: customerData },
+            { new: true, runValidators: true }
+        );
     }
 
-    static delete(id)
+    static async delete(id)
     {
-        const index = customers.findIndex(customer => customer.id === id);
-        if (index === -1)
-        {
-            return false;
-        }
-
-        customers.splice(index, 1);
-        return true;
+        const deletedCustomer = await Customer.findOneAndDelete({ id: Number(id) });
+        return Boolean(deletedCustomer);
     }
 }
 
 module.exports = CustomerModel;
-
-
-
-
-
-
-
-
-
-
