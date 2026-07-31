@@ -8,9 +8,9 @@ function Footer() {
           <rect x="8" y="8" width="48" height="48" rx="12" />
           <path d="M20 24h24M20 32h14M20 40h20" />
         </svg>
-        <span>Cognixia</span>
+        <span>Bank</span>
       </div>
-      <p>© {currentYear} Cognixia Customer Hub. All rights reserved.</p>
+      <p>© {currentYear} Bank Client Hub. All rights reserved.</p>
     </footer>
   );
 }

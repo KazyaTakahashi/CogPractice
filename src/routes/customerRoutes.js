@@ -1,12 +1,15 @@
 const express = require('express');
 const customerController = require('../controllers/customerController');
+const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.get('/', customerController.getAll);
-router.get('/:id', customerController.getById);
-router.post('/', customerController.create);
-router.put('/:id', customerController.update);
-router.delete('/:id', customerController.delete);
+router.use(authMiddleware);
+
+router.get('/', (req, res) => customerController.getAll(req, res));
+router.get('/:id', (req, res) => customerController.getById(req, res));
+router.post('/', (req, res) => customerController.create(req, res));
+router.put('/:id', (req, res) => customerController.update(req, res));
+router.delete('/:id', (req, res) => customerController.delete(req, res));
 
 module.exports = router;

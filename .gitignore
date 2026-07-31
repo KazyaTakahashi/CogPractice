@@ -2,3 +2,11 @@
 atlas-credentials.env
 
 node_modules/
+.lambda-build/
+lambda.zip
+
+aws/terraform/.terraform/
+aws/terraform/.terraform.lock.hcl
+aws/terraform/terraform.tfstate
+aws/terraform/terraform.tfstate.backup
+aws/terraform/terraform.tfvars

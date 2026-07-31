@@ -87,6 +87,20 @@ body {
   color: #38bdf8;
 }
 
+.nav-button {
+  padding: 0.35rem 0.8rem;
+}
+
+.user-pill {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+}
+
 .hero-card,
 .info-card,
 .table-card,
@@ -222,6 +236,15 @@ th {
 .form-grid {
   display: grid;
   gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.auth-card {
+  margin: 1.5rem auto 0;
+  max-width: 480px;
+}
+
+.auth-meta {
   margin-top: 1rem;
 }
 

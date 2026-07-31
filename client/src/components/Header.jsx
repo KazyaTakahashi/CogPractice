@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 function Header() {
+  const { user, isAuthenticated, logout } = useAuth();
+
   return (
     <header className="site-header">
       <div className="brand-block">
@@ -11,8 +14,8 @@ function Header() {
           </svg>
         </div>
         <div>
-          <h1>Cognixia Customer Hub</h1>
-          <p>Reliable banking and customer experiences</p>
+          <h1>Bank Client Hub</h1>
+          <p>Reliable service and customer experiences</p>
         </div>
       </div>
 
@@ -21,6 +24,17 @@ function Header() {
         <NavLink to="/about">About</NavLink>
         <NavLink to="/services">Services</NavLink>
         <NavLink to="/contact">Contact</NavLink>
+        {isAuthenticated ? (
+          <>
+            <span className="user-pill">{user.name}</span>
+            <button type="button" className="btn-secondary nav-button" onClick={logout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/register">Register</NavLink>
+          </>
+        )}
       </nav>
     </header>
   );

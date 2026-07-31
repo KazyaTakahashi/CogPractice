@@ -5,7 +5,7 @@ function Home() {
     <section className="hero-card">
       <div>
         <p className="eyebrow">Customer-first banking</p>
-        <h2>Modern experiences for modern customers</h2>
+        <h2>Modern experiences for modern clients</h2>
         <p>
           Explore a polished customer portal that combines trusted service, flexible account tools,
           and effortless communication in one place.

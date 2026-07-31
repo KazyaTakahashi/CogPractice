@@ -1,0 +1,5 @@
+student_name           = "your-name"
+created_date           = "31-Jul-2026"
+mongodb_uri            = "mongodb+srv://..."
+jwt_access_secret      = "change-me"
+jwt_refresh_secret     = "change-me"

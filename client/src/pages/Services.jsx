@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchWithAuth } from "../lib/authApi";
 
 function Services() {
   const [customers, setCustomers] = useState([]);
@@ -12,7 +13,7 @@ function Services() {
   const loadCustomers = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/customers");
+      const response = await fetchWithAuth("/api/customers");
       if (!response.ok) {
         throw new Error("Unable to load customers");
       }
@@ -42,7 +43,7 @@ function Services() {
 
   const saveEdit = async (id) => {
     try {
-      const response = await fetch(`/api/customers/${id}`, {
+      const response = await fetchWithAuth(`/api/customers/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(draft)
@@ -61,7 +62,7 @@ function Services() {
 
   const deleteCustomer = async (id) => {
     try {
-      const response = await fetch(`/api/customers/${id}`, { method: "DELETE" });
+      const response = await fetchWithAuth(`/api/customers/${id}`, { method: "DELETE" });
       if (!response.ok) {
         throw new Error("Unable to delete customer");
       }
@@ -73,7 +74,7 @@ function Services() {
 
   const addCustomer = async () => {
     try {
-      const response = await fetch("/api/customers", {
+      const response = await fetchWithAuth("/api/customers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newCustomer)
@@ -96,7 +97,7 @@ function Services() {
       <div className="table-header">
         <div>
           <h2>Customer services</h2>
-          <p>View, update, and manage your customer records from one dashboard.</p>
+          <p>View, update, and manage your client records from one dashboard.</p>
         </div>
         <button className="btn-primary" onClick={() => setShowAddForm((prev) => !prev)}>
           {showAddForm ? "Close" : "Add"}

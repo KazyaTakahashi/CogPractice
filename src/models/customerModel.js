@@ -1,16 +1,5 @@
 const mongoose = require("mongoose");
-const path = require("path");
-const dotenv = require("dotenv");
-
-dotenv.config({ path: path.resolve(__dirname, "../../atlas-credentials.env") });
-
-const mongoUri = process.env.MONGODB_URI || "mongodb+srv://<db_username>:<db_password>@cognixia.3nnb1qc.mongodb.net/?appName=Cognixia";
-
-mongoose.connect(mongoUri, {
-    dbName: "BankApp"
-})
-.then(() => console.log("MongoDB connected"))
-.catch((error) => console.error("MongoDB connection error:", error));
+const connectDatabase = require("../config/db");
 
 const customerSchema = new mongoose.Schema({
     id: {
@@ -37,16 +26,19 @@ class CustomerModel
 {
     static async findAll()
     {
+        await connectDatabase();
         return Customer.find().sort({ id: 1 });
     }
 
     static async findById(id)
     {
+        await connectDatabase();
         return Customer.findOne({ id: Number(id) });
     }
 
     static async create(customerData)
     {
+        await connectDatabase();
         const latestCustomer = await Customer.findOne().sort({ id: -1 }).select("id");
         const nextId = latestCustomer && latestCustomer.id ? latestCustomer.id + 1 : 1;
 
@@ -58,6 +50,7 @@ class CustomerModel
 
     static async update(id, customerData)
     {
+        await connectDatabase();
         return Customer.findOneAndUpdate(
             { id: Number(id) },
             { $set: customerData },
@@ -67,6 +60,7 @@ class CustomerModel
 
     static async delete(id)
     {
+        await connectDatabase();
         const deletedCustomer = await Customer.findOneAndDelete({ id: Number(id) });
         return Boolean(deletedCustomer);
     }
