@@ -3,3 +3,7 @@ created_date           = "31-Jul-2026"
 mongodb_uri            = "mongodb+srv://..."
 jwt_access_secret      = "change-me"
 jwt_refresh_secret     = "change-me"
+
+# Match the working notice-board pattern by using the shared Lambda execution role directly.
+deploy_backend  = true
+lambda_role_arn = "arn:aws:iam::279249498881:role/quicklabs-fullstack-shared-lambda-exec"

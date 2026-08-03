@@ -1,0 +1,145 @@
+timestamp,message
+1785718904583,"INIT_START Runtime Version: nodejs:20.v101	Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:18671876e7cc385452255180c58ca50cf8763398a4248ae92ed14410d196b942
+"
+1785718905311,"2026-08-03T01:01:45.311Z	undefined	INFO	◇ injected env (0) from atlas-credentials.env // tip: ⌁ auth for agents [www.vestauth.com]
+"
+1785718905420,"START RequestId: 93d65223-c6da-4a66-863b-47c7e1d000db Version: $LATEST
+"
+1785718906296,"2026-08-03T01:01:46.296Z	93d65223-c6da-4a66-863b-47c7e1d000db	INFO	MongoDB connected
+"
+1785718916357,"2026-08-03T01:01:56.357Z	93d65223-c6da-4a66-863b-47c7e1d000db	ERROR	MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout._onTimeout (/var/task/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:25)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+"
+1785718916457,"END RequestId: 93d65223-c6da-4a66-863b-47c7e1d000db
+"
+1785718916457,"REPORT RequestId: 93d65223-c6da-4a66-863b-47c7e1d000db	Duration: 11035.54 ms	Billed Duration: 11869 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	Init Duration: 833.24 ms	
+"
+1785718940334,"START RequestId: 6c9ecbd2-e537-4b59-bf22-16b45480af12 Version: $LATEST
+"
+1785718940377,"2026-08-03T01:02:20.377Z	93d65223-c6da-4a66-863b-47c7e1d000db	ERROR	MongoDB connection error: MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
+    at _handleConnectionErrors (/var/task/node_modules/mongoose/lib/connection.js:1172:11)
+    at NativeConnection.openUri (/var/task/node_modules/mongoose/lib/connection.js:1103:11)
+    at async connectDatabase (/var/task/src/config/db.js:16:3) {
+  errorLabelSet: Set(0) {},
+  reason: TopologyDescription {
+    type: 'ReplicaSetNoPrimary',
+    servers: Map(3) {
+      'ac-t5ff7uq-shard-00-01.3nnb1qc.mongodb.net:27017' => [ServerDescription],
+      'ac-t5ff7uq-shard-00-02.3nnb1qc.mongodb.net:27017' => [ServerDescription],
+      'ac-t5ff7uq-shard-00-00.3nnb1qc.mongodb.net:27017' => [ServerDescription]
+    },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    setName: 'atlas-cmpw1m-shard-0',
+    maxElectionId: null,
+    maxSetVersion: null,
+    commonWireVersion: 0,
+    logicalSessionTimeoutMinutes: null
+  },
+  code: undefined,
+  cause: TopologyDescription {
+    type: 'ReplicaSetNoPrimary',
+    servers: Map(3) {
+      'ac-t5ff7uq-shard-00-01.3nnb1qc.mongodb.net:27017' => [ServerDescription],
+      'ac-t5ff7uq-shard-00-02.3nnb1qc.mongodb.net:27017' => [ServerDescription],
+      'ac-t5ff7uq-shard-00-00.3nnb1qc.mongodb.net:27017' => [ServerDescription]
+    },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    setName: 'atlas-cmpw1m-shard-0',
+    maxElectionId: null,
+    maxSetVersion: null,
+    commonWireVersion: 0,
+    logicalSessionTimeoutMinutes: null
+  }
+}
+"
+1785718940495,"END RequestId: 6c9ecbd2-e537-4b59-bf22-16b45480af12
+"
+1785718940495,"REPORT RequestId: 6c9ecbd2-e537-4b59-bf22-16b45480af12	Duration: 160.28 ms	Billed Duration: 161 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785718940537,"START RequestId: c9dd9888-52c2-4c57-8db3-c443fb7e572a Version: $LATEST
+"
+1785718950550,"2026-08-03T01:02:30.550Z	c9dd9888-52c2-4c57-8db3-c443fb7e572a	ERROR	MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout._onTimeout (/var/task/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:25)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+"
+1785718950552,"END RequestId: c9dd9888-52c2-4c57-8db3-c443fb7e572a
+"
+1785718950552,"REPORT RequestId: c9dd9888-52c2-4c57-8db3-c443fb7e572a	Duration: 10014.73 ms	Billed Duration: 10015 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785719276937,"START RequestId: 335cea89-b315-4835-be6d-0da8e1ecbc6d Version: $LATEST
+"
+1785719277015,"END RequestId: 335cea89-b315-4835-be6d-0da8e1ecbc6d
+"
+1785719277015,"REPORT RequestId: 335cea89-b315-4835-be6d-0da8e1ecbc6d	Duration: 77.69 ms	Billed Duration: 78 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785719277072,"START RequestId: 0ef5a4ad-777a-49ac-8ab3-00d90ab0fc4a Version: $LATEST
+"
+1785719287086,"2026-08-03T01:08:07.086Z	0ef5a4ad-777a-49ac-8ab3-00d90ab0fc4a	ERROR	MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout._onTimeout (/var/task/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:25)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+"
+1785719287089,"END RequestId: 0ef5a4ad-777a-49ac-8ab3-00d90ab0fc4a
+"
+1785719287089,"REPORT RequestId: 0ef5a4ad-777a-49ac-8ab3-00d90ab0fc4a	Duration: 10016.75 ms	Billed Duration: 10017 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785719334214,"START RequestId: 8170ad93-e13c-4ed1-83e6-ae002e373bb4 Version: $LATEST
+"
+1785719334236,"END RequestId: 8170ad93-e13c-4ed1-83e6-ae002e373bb4
+"
+1785719334236,"REPORT RequestId: 8170ad93-e13c-4ed1-83e6-ae002e373bb4	Duration: 20.98 ms	Billed Duration: 21 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785719334287,"START RequestId: b3948b71-3849-4245-a2cb-37c707fc99fb Version: $LATEST
+"
+1785719344294,"2026-08-03T01:09:04.294Z	b3948b71-3849-4245-a2cb-37c707fc99fb	ERROR	MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout._onTimeout (/var/task/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:25)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+"
+1785719344297,"END RequestId: b3948b71-3849-4245-a2cb-37c707fc99fb
+"
+1785719344297,"REPORT RequestId: b3948b71-3849-4245-a2cb-37c707fc99fb	Duration: 10009.42 ms	Billed Duration: 10010 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785719368323,"START RequestId: d94998f6-d621-4ca3-9a58-2fda917d07f1 Version: $LATEST
+"
+1785719368335,"END RequestId: d94998f6-d621-4ca3-9a58-2fda917d07f1
+"
+1785719368336,"REPORT RequestId: d94998f6-d621-4ca3-9a58-2fda917d07f1	Duration: 11.87 ms	Billed Duration: 12 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785719368431,"START RequestId: 1bf9d5f0-4593-4ea4-957e-ffbe2a20e81c Version: $LATEST
+"
+1785719378442,"2026-08-03T01:09:38.442Z	1bf9d5f0-4593-4ea4-957e-ffbe2a20e81c	ERROR	MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout._onTimeout (/var/task/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:25)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+"
+1785719378444,"END RequestId: 1bf9d5f0-4593-4ea4-957e-ffbe2a20e81c
+"
+1785719378445,"REPORT RequestId: 1bf9d5f0-4593-4ea4-957e-ffbe2a20e81c	Duration: 10013.28 ms	Billed Duration: 10014 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785719688021,"START RequestId: 60bc0f40-8645-4b9d-b828-c5ca692db8f5 Version: $LATEST
+"
+1785719688116,"END RequestId: 60bc0f40-8645-4b9d-b828-c5ca692db8f5
+"
+1785719688116,"REPORT RequestId: 60bc0f40-8645-4b9d-b828-c5ca692db8f5	Duration: 94.42 ms	Billed Duration: 95 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"
+1785719688162,"START RequestId: 51941e7c-51f9-4e68-ac08-a6b5e337a0cf Version: $LATEST
+"
+1785719698173,"2026-08-03T01:14:58.173Z	51941e7c-51f9-4e68-ac08-a6b5e337a0cf	ERROR	MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout._onTimeout (/var/task/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:142:25)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+"
+1785719698176,"END RequestId: 51941e7c-51f9-4e68-ac08-a6b5e337a0cf
+"
+1785719698176,"REPORT RequestId: 51941e7c-51f9-4e68-ac08-a6b5e337a0cf	Duration: 10013.77 ms	Billed Duration: 10014 ms	Memory Size: 128 MB	Max Memory Used: 103 MB	
+"

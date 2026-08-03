@@ -15,6 +15,17 @@ variable "project_name" {
   default     = "cogpractice"
 }
 
+variable "lambda_role_arn" {
+  type        = string
+  description = "ARN of the shared Lambda execution role"
+}
+
+variable "deploy_backend" {
+  type        = bool
+  description = "Deploy Lambda + API Gateway backend resources"
+  default     = true
+}
+
 variable "created_date" {
   type        = string
   description = "Tag date in dd-mmm-yyyy format"

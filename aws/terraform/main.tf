@@ -31,29 +31,10 @@ locals {
   base_name = "student-${var.student_name}-${var.project_name}-${random_id.suffix.hex}"
 }
 
-resource "aws_iam_role" "lambda_exec" {
-  name = "${local.base_name}-lambda-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Effect = "Allow",
-      Principal = {
-        Service = "lambda.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
-    }]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role       = aws_iam_role.lambda_exec.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
-
 resource "aws_lambda_function" "backend" {
+  count         = var.deploy_backend ? 1 : 0
   function_name = "${local.base_name}-api"
-  role          = aws_iam_role.lambda_exec.arn
+  role          = var.lambda_role_arn
   runtime       = "nodejs20.x"
   handler       = "lambda.handler"
   filename      = "${path.module}/../../lambda.zip"
@@ -72,6 +53,7 @@ resource "aws_lambda_function" "backend" {
 }
 
 resource "aws_apigatewayv2_api" "http" {
+  count         = var.deploy_backend ? 1 : 0
   name          = "${local.base_name}-http-api"
   protocol_type = "HTTP"
 
@@ -83,30 +65,34 @@ resource "aws_apigatewayv2_api" "http" {
 }
 
 resource "aws_apigatewayv2_integration" "backend" {
-  api_id                 = aws_apigatewayv2_api.http.id
+  count                  = var.deploy_backend ? 1 : 0
+  api_id                 = aws_apigatewayv2_api.http[0].id
   integration_type       = "AWS_PROXY"
-  integration_uri        = aws_lambda_function.backend.invoke_arn
+  integration_uri        = aws_lambda_function.backend[0].invoke_arn
   payload_format_version = "2.0"
 }
 
 resource "aws_apigatewayv2_route" "default" {
-  api_id    = aws_apigatewayv2_api.http.id
+  count     = var.deploy_backend ? 1 : 0
+  api_id    = aws_apigatewayv2_api.http[0].id
   route_key = "$default"
-  target    = "integrations/${aws_apigatewayv2_integration.backend.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.backend[0].id}"
 }
 
 resource "aws_apigatewayv2_stage" "default" {
-  api_id      = aws_apigatewayv2_api.http.id
+  count       = var.deploy_backend ? 1 : 0
+  api_id      = aws_apigatewayv2_api.http[0].id
   name        = "$default"
   auto_deploy = true
 }
 
 resource "aws_lambda_permission" "apigw" {
+  count         = var.deploy_backend ? 1 : 0
   statement_id  = "AllowInvokeFromHttpApi"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.backend.function_name
+  function_name = aws_lambda_function.backend[0].function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.http.execution_arn}/*/*"
+  source_arn    = "${aws_apigatewayv2_api.http[0].execution_arn}/*/*"
 }
 
 resource "aws_s3_bucket" "frontend" {

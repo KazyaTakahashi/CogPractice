@@ -1,5 +1,5 @@
 output "api_url" {
-  value       = aws_apigatewayv2_stage.default.invoke_url
+  value       = var.deploy_backend ? aws_apigatewayv2_stage.default[0].invoke_url : null
   description = "API Gateway base URL"
 }
 
@@ -14,7 +14,7 @@ output "s3_bucket" {
 }
 
 output "lambda_function_name" {
-  value       = aws_lambda_function.backend.function_name
+  value       = var.deploy_backend ? aws_lambda_function.backend[0].function_name : null
   description = "Lambda function name"
 }
 
